@@ -3,49 +3,283 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="style.css">
-    <title>Form Validator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <title>Modern Login Form</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #000000;
+            background-image: url('https://www.transparenttextures.com/patterns/cubes.png'),
+                            linear-gradient(45deg, #0f0c29, #302b63, #24243e);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            margin: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.8) 100%);
+            z-index: 1;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            max-width: 400px;
+            width: 100%;
+            padding: 40px;
+            margin: 0 auto;
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .logo {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 20px rgba(255,255,255,0.3));
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .form-title {
+            color: #ffffff;
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 30px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .form-control {
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 12px;
+            padding: 0 20px 0 45px;
+            font-size: 1rem;
+            color: #ffffff;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 20px rgba(255,255,255,0.1);
+        }
+
+        .form-group i {
+            position: absolute;
+            left: 15px;
+            top: 17px;
+            font-size: 1.2rem;
+            color: #ffffff;
+            opacity: 0.8;
+        }
+
+        .form-control::placeholder {
+            color: rgba(255,255,255,0.6);
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            border: none;
+            height: 50px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.6);
+            background: linear-gradient(45deg, #ff8e8e, #ff6b6b);
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 17px;
+            cursor: pointer;
+            color: #ffffff;
+            opacity: 0.8;
+        }
+
+        .form-control:focus + i {
+            color: #ff6b6b;
+            opacity: 1;
+        }
+
+        .error {
+            border: 2px solid #ff4646;
+            animation: shake 0.3s ease-in-out;
+        }
+
+        .success {
+            border: 2px solid #4CAF50;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        /* Parçacık efekti */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            animation: float-particle 15s infinite linear;
+        }
+
+        @keyframes float-particle {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-100vh) rotate(360deg); }
+        }
+    </style>
 </head>
 <body>
-    
-        <div class="container my-5 d-flex justify-content-center">
-            <div class="col-sm-5 ">
-                <div class="card">
-                    <div class="card-header">Kullanıcı oluştur</div>
-                    <div class="card-body">
-                        <form id="form">
-                        <div class="form-group">
-                            <label for="username">username</label>
-                            <input type="text" class="form-control" id="username" placeholder="enter username">
-                            <div></div>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">email</label>
-                            <input type="email" class="form-control" id="email" placeholder="enter email">
-                            <div></div>
-                        </div>
-                        <div class="form-group">
-                            <label for="password">password</label>
-                            <input type="password" class="form-control" id="password" placeholder="enter password">
-                            <div></div>
-                        </div>
-                        <div class="form-group">
-                            <label for="repassword">repassword</label>
-                            <input type="repassword" class="form-control" id="repassword" placeholder="enter repassword again please">
-                            <div></div>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-block">register</button>
-                    </form>
-                    </div>
-                </div>
+    <!-- Parçacık efekti için container -->
+    <div class="particles"></div>
+
+    <div class="container">
+        <div class="card animate__animated animate__fadeIn">
+            <div class="logo-container">
+                <img src="https://cdn3.iconfinder.com/data/icons/galaxy-open-line-gradient-i/200/account-512.png" alt="Logo" class="logo">
+                <h2 class="form-title">Hoş Geldiniz</h2>
             </div>
+            
+            <form id="form">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="username" placeholder="Kullanıcı Adı">
+                    <i class='bx bxs-user'></i>
+                </div>
+
+                <div class="form-group">
+                    <input type="email" class="form-control" id="email" placeholder="E-posta Adresi">
+                    <i class='bx bxs-envelope'></i>
+                </div>
+
+                <div class="form-group">
+                    <input type="password" class="form-control" id="password" placeholder="Şifre">
+                    <i class='bx bxs-lock-alt'></i>
+                    <i class='bx bx-hide password-toggle'></i>
+                </div>
+
+                <div class="form-group">
+                    <input type="password" class="form-control" id="repassword" placeholder="Şifre Tekrar">
+                    <i class='bx bxs-lock-alt'></i>
+                    <i class='bx bx-hide password-toggle'></i>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">
+                    <i class='bx bxs-user-plus mr-2'></i>
+                    Kayıt Ol
+                </button>
+            </form>
         </div>
+    </div>
 
+    <script>
+        // Parçacık efekti oluşturma
+        function createParticles() {
+            const particlesContainer = document.querySelector('.particles');
+            const particleCount = 50;
 
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // Rastgele boyut
+                const size = Math.random() * 5 + 2;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Rastgele pozisyon
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                
+                // Rastgele animasyon süresi
+                particle.style.animationDuration = `${Math.random() * 20 + 10}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Şifre göster/gizle
+        document.querySelectorAll('.password-toggle').forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                const input = this.previousElementSibling.previousElementSibling;
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    this.classList.remove('bx-hide');
+                    this.classList.add('bx-show');
+                } else {
+                    input.type = 'password';
+                    this.classList.remove('bx-show');
+                    this.classList.add('bx-hide');
+                }
+            });
+        });
+
+        // Parçacıkları oluştur
+        createParticles();
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
     <script src="script.js"></script>    
 </body>
 </html>
